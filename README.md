@@ -22,9 +22,12 @@ $ java -jar client.jar
 ```
 
 To import both projects on Eclipse, follow these steps:
-Open Eclipse IDE and import Gradle project for imdb-query-server. 
-Open Eclipse IDE and "Open Project From File System" for imdb-query-client. 
 
-imdb-query-client - Run the main method from ImdbClient class.
-imdb-query-server - Run the main method from ImdbServer class.
+	- Open Eclipse IDE and import Gradle project for imdb-query-server. 
+	- Open Eclipse IDE and "Open Project From File System" for imdb-query-client. 
+
+And to execute from Eclipse:
+
+	- imdb-query-client - Run the main method from ImdbClient class.
+	- imdb-query-server - Run the main method from ImdbServer class.
 
