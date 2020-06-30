@@ -49,6 +49,7 @@ public class ImdbClientMain {
             Thread.sleep(100);
 			
 		}
+		socket.close();
         
     }
 
