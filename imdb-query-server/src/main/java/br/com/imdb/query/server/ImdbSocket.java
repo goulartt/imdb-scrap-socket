@@ -54,8 +54,6 @@ public class ImdbSocket {
 			ois.close();
 			oos.close();
 			socket.close();
-			if (message.equalsIgnoreCase("exit"))
-				break;
 		}
 		
 		System.out.println("Shutting down Socket server!!");
