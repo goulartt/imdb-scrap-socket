@@ -9,7 +9,7 @@ import org.jsoup.nodes.Element;
 
 public class ImdbService {
 	/**
-	 * Scrap imdb website based into query string title of the movie
+	 * Scrape imdb website based into query string title of the movie
 	 * @param query
 	 * @return
 	 * @throws IOException
@@ -31,7 +31,7 @@ public class ImdbService {
 			return buildResponse(builder, counter);
 		} catch (Exception e) {
 			System.err.println("Error: "+e.toString());
-			return e.getMessage();
+			return null;
 		}
 
 	}
