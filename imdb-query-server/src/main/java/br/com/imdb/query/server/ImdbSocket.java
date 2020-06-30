@@ -25,6 +25,11 @@ public class ImdbSocket {
 		imdb = new ImdbService();
 	}
 	
+	/**
+	 * Socket opened to receive TCP Requests and process query to return titles from imdb
+	 * @throws IOException
+	 * @throws ClassNotFoundException
+	 */
 	public void run() throws IOException, ClassNotFoundException {
 		
 		while (true) {

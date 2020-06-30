@@ -8,7 +8,12 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
 public class ImdbService {
-
+	/**
+	 * Scrap imdb website based into query string title of the movie
+	 * @param query
+	 * @return
+	 * @throws IOException
+	 */
 	public String fetchHtml(String query) throws IOException {
 		try {
 			String titleFromQuery = getTitleFromQuery(query);
@@ -30,11 +35,22 @@ public class ImdbService {
 		}
 
 	}
-
+	/**
+	 * The protocol request is text based in format queryLenght:query,
+	 * so I split the query and get only the query text
+	 * @param query
+	 * @return title
+	 */
 	private String getTitleFromQuery(String query) {
 		return query.split(":")[1].trim();
 	}
-
+	
+	/**
+	 * The protocol response is text based in format payloadLenght:payload
+	 * @param builder
+	 * @param counter
+	 * @return response
+	 */
 	private String buildResponse(StringBuilder builder, int counter) {
 		if (counter == 0) return null;
 		return counter+":"+builder.toString();
