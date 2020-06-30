@@ -6,6 +6,7 @@ import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.Optional;
 import java.util.Scanner;
 
 public class ImdbClient {
@@ -30,13 +31,19 @@ public class ImdbClient {
             oos.writeObject(buildPackage(title));
             //read the server response message
             ois = new ObjectInputStream(socket.getInputStream());
-            String message = (String) ois.readObject();
-            System.out.println(message);
+            
+            Optional<Object> message = Optional.ofNullable(ois.readObject());
+            if (message.isPresent()) {
+            	System.out.println(message.get().toString());            	
+            } else {
+            	System.err.println("Not found");
+            }
             //close resources
             ois.close();
             oos.close();
 			
 			if (title.equals("quit")) {
+				scanner.close();
 				break;
 			}
             Thread.sleep(100);
@@ -46,6 +53,6 @@ public class ImdbClient {
     }
 
 	private static String buildPackage(String title) {
-		return "<queryLenght>\n"+title.trim().replace(" ", "").length()+"\n<\\queryLenght>:\n<query>\n"+title+"\n<\\query>";
+		return title.trim().replaceAll("\\s", "").length()+":"+title;
 	}
 }

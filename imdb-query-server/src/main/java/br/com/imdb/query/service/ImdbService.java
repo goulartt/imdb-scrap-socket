@@ -10,25 +10,33 @@ import org.jsoup.nodes.Element;
 public class ImdbService {
 
 	public String fetchHtml(String query) throws IOException {
-		String titleFromQuery = getTitleFromQuery(query);
-		final Document document = Jsoup.connect("http://www.imdb.com/find?tt=on;q="+URLEncoder.encode(titleFromQuery, "UTF-8")+"&s=tt&ttype=ft").get();
-		StringBuilder builder = new StringBuilder();
-		int counter = 0;
-		for (Element row : document.select("table.findList tbody tr")) {
-
-			final String title = row.select(".result_text").text();
-			builder.append(title.split("aka")[0]);
+		try {
+			String titleFromQuery = getTitleFromQuery(query);
+			final Document document = Jsoup.connect("http://www.imdb.com/find?tt=on;q="+URLEncoder.encode(titleFromQuery, "UTF-8")+"&s=tt&ttype=ft").get();
+			StringBuilder builder = new StringBuilder();
+			int counter = 0;
 			builder.append("\n");
-			counter++;
+			for (Element row : document.select("table.findList tbody tr")) {
+
+				final String title = row.select(".result_text").text();
+				builder.append(title.split("aka")[0]);
+				builder.append("\n");
+				counter++;
+			}
+			return buildResponse(builder, counter);
+		} catch (Exception e) {
+			System.err.println("Error: "+e.toString());
+			return e.getMessage();
 		}
-		return buildResponse(builder, counter);
+
 	}
 
 	private String getTitleFromQuery(String query) {
-		return query.split("<query>")[1].replace("<\\query>", "").trim();
+		return query.split(":")[1].trim();
 	}
 
 	private String buildResponse(StringBuilder builder, int counter) {
-		return "<payloadLenght>\n"+counter+"\n<\\payloadLenght>:\n<payload>\n"+builder.toString()+"\n<\\payload>";
+		if (counter == 0) return null;
+		return counter+":"+builder.toString();
 	}
 }
